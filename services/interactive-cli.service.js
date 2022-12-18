@@ -1,14 +1,17 @@
 import readline from "readline";
-import { EOL } from "os";
+import {EOL, homedir} from "os";
+import {chdir} from "process";
 
-import { getGreenMessage } from "../utils/message.js";
+import {getGreenMessage} from "../utils/message.js";
 
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
 });
 
-const QUESTION = "You are currently in path_to_working_directory: ";
+chdir(homedir());
+
+const QUESTION = `You are currently in ${homedir()}: `;
 
 rl.on("SIGINT", () => {
     rl.write(`CTRL + C ${EOL}`);

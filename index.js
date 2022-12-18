@@ -1,7 +1,8 @@
-import { ask } from "./services/interactive-cli.js";
-import { getArgs } from "./utils/args.js";
+import {ask} from "./services/interactive-cli.service.js";
+import {getArgs, getInputArgs} from "./utils/args.js";
+import {execute} from "./commands.js";
 
-const { username } = getArgs();
+const {username} = getArgs();
 
 console.log(`Welcome to the File Manager, ${username}!`);
 
@@ -17,5 +18,11 @@ while (true) {
         process.emit("SIGINT");
     }
 
-    console.log(answer);
+    const {command, props} = getInputArgs(answer);
+
+    try {
+        execute(command, props);
+    } catch (e) {
+        console.error(e.message);
+    }
 }
