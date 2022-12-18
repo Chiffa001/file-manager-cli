@@ -4,7 +4,12 @@ export const getArgs = () =>
             return acc;
         }
 
-        const [key, value] = arg.slice(2).split('=');
+        const [key, value] = arg.slice(2).split("=");
 
         return { ...acc, [key]: value };
     }, {});
+
+export const getInputArgs = (input) => {
+    const [command, ...props] = input.split(" ");
+    return { command, props };
+};
