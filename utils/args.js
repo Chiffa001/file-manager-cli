@@ -6,10 +6,10 @@ export const getArgs = () =>
 
         const [key, value] = arg.slice(2).split("=");
 
-        return { ...acc, [key]: value };
+        return {...acc, [key]: value};
     }, {});
 
 export const getInputArgs = (input) => {
     const [command, ...props] = input.split(" ");
-    return { command, props };
+    return {command: command.trim(), props: props.map((prop) => prop.trim())};
 };

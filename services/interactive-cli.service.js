@@ -1,6 +1,6 @@
 import readline from "readline";
 import {EOL, homedir} from "os";
-import {chdir} from "process";
+import {chdir, cwd} from "process";
 
 import {getGreenMessage} from "../utils/message.js";
 
@@ -11,8 +11,6 @@ const rl = readline.createInterface({
 
 chdir(homedir());
 
-const QUESTION = `You are currently in ${homedir()}: `;
-
 rl.on("SIGINT", () => {
     rl.write(`CTRL + C ${EOL}`);
     process.emit("SIGINT");
@@ -20,5 +18,5 @@ rl.on("SIGINT", () => {
 
 export const ask = () =>
     new Promise((resolve) => {
-        rl.question(getGreenMessage(QUESTION), (answer) => resolve(answer));
+        rl.question(getGreenMessage(`You are currently in ${cwd()}: `), (answer) => resolve(answer));
     });
