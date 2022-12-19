@@ -2,6 +2,8 @@ import {join} from "path";
 import {cwd} from "process";
 import {stat} from "fs/promises";
 
+const sort = (a, b) => a.toLowerCase() - b.toLowerCase();
+
 export const getDirectories = async (list) => {
     const directories = [];
     for (const name of list) {
@@ -11,7 +13,7 @@ export const getDirectories = async (list) => {
         directories.push(name);
     }
 
-    return directories.sort().map((name) => ({name, type: 'directory'}));
+    return directories.sort(sort).map((name) => ({name, type: 'directory'}));
 };
 export const getFiles = async (list) => {
     const files = [];
@@ -22,5 +24,5 @@ export const getFiles = async (list) => {
         files.push(name);
     }
 
-    return files.sort().map((name) => ({name, type: 'file'}));
+    return files.sort(sort).map((name) => ({name, type: 'file'}));
 };
