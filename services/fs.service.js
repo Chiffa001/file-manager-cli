@@ -1,14 +1,13 @@
-import {chdir, cwd} from "process";
 import {createHash} from 'crypto';
-import {readdir, readFile, appendFile, rename as renameFile, rm} from "fs/promises";
-import {createReadStream, createWriteStream} from "fs";
+import {chdir, cwd} from "process";
+import {resolve, join, parse} from "path";
 import {pipeline} from "stream/promises";
-import {resolve, join} from "path";
-import {EOL} from "os";
+import {createReadStream, createWriteStream} from "fs";
+import {readdir, readFile, appendFile, rename as renameFile, rm} from "fs/promises";
 
-import {throwInputError, throwOperationError} from "../utils/error.js";
-import {getDirectories, getFiles} from "../utils/fs.js";
 import {getGreenMessage} from "../utils/message.js";
+import {getDirectories, getFiles} from "../utils/fs.js";
+import {throwInputError, throwOperationError} from "../utils/error.js";
 
 export const up = () => {
     chdir('..');
@@ -34,7 +33,6 @@ export const ls = async () => {
         ...((await getFiles(list))),
     ]);
 
-    console.log(EOL);
     console.table(result);
 };
 
@@ -90,9 +88,12 @@ export const copy = async (oldPath, newPath, needLog = true) => {
 
     try {
         const src = resolve(cwd(), oldPath);
-        const dist = resolve(cwd(), newPath);
+        const dist = resolve(cwd(), newPath, parse(src).base);
 
-        await pipeline(createReadStream(src), createWriteStream(dist));
+        const readStream = createReadStream(src)
+        const writeStream = createWriteStream(dist);
+
+        await pipeline(readStream, writeStream);
 
         if (needLog) {
             console.log(getGreenMessage("done!"));
