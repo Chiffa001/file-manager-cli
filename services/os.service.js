@@ -1,25 +1,30 @@
 import {EOL, cpus, userInfo, arch} from "os";
-import {throwError} from "../utils/error.js";
+import {throwOperationError} from "../utils/error.js";
 
-export const getOsInfo = (infoType) => {
+export const showOsInfo = (infoType) => {
     switch (infoType) {
         case "--EOL":
-            return JSON.stringify(EOL);
+            console.log(JSON.stringify(EOL));
+            break;
         case "--cpus":
-            return {
+            console.log({
                 quantity: cpus().length,
                 cpus: cpus().map(({model, speed}) => ({
                     model: model.trim(),
                     clockRate: `${(speed / 1000).toFixed(1)} GHz`,
                 })),
-            };
+            });
+            break;
         case "--homedir":
-            return userInfo().homedir;
+            console.log(userInfo().homedir);
+            break;
         case "--username":
-            return userInfo().username;
+            console.log(userInfo().username);
+            break;
         case "--architecture":
-            return arch();
+            console.log(arch());
+            break;
         default:
-            throwError();
+            throwOperationError();
     }
 };
