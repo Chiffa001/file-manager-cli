@@ -1,6 +1,6 @@
-import {stat} from "fs/promises";
 import {join} from "path";
 import {cwd} from "process";
+import {stat} from "fs/promises";
 
 export const getDirectories = async (list) => {
     const directories = [];

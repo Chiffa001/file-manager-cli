@@ -1,4 +1,5 @@
 import {EOL, cpus, userInfo, arch} from "os";
+
 import {throwOperationError} from "../utils/error.js";
 
 export const showOsInfo = (infoType) => {

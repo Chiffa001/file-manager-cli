@@ -1,5 +1,6 @@
 import {throwInputError} from "./utils/error.js";
 import {showOsInfo} from "./services/os.service.js";
+import {compress, decompress} from "./services/archive.service.js";
 import {add, cat, cd, copy, hash, ls, move, remove, rename, up} from "./services/fs.service.js";
 
 export const execute = async (command, props) => {
@@ -36,6 +37,12 @@ export const execute = async (command, props) => {
             break;
         case "hash":
             await hash(...props);
+            break;
+        case "compress":
+            await compress(...props);
+            break;
+        case "decompress":
+            await decompress(...props);
             break;
         default:
             throwInputError();

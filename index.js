@@ -1,6 +1,6 @@
-import {ask} from "./services/interactive-cli.service.js";
-import {getArgs, getInputArgs} from "./utils/args.js";
 import {execute} from "./commands.js";
+import {getArgs, getInputArgs} from "./utils/args.js";
+import {ask} from "./services/interactive-cli.service.js";
 
 const {username} = getArgs();
 
